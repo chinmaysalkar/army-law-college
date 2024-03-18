@@ -23,6 +23,12 @@ const errorMiddleware = (err, req, res, next) => {
     defaultError.statusCode = 400;
     defaultError.message = `File upload error : ${err.message.split(": ")}`;
   }
+
+  // CORS error
+  if(err.name==="CORSError"){
+    defaultError.statusCode=403;
+    defaultError.message=` CORS Error : ${err.message}`
+  }
   res.status(defaultError.statusCode).json({ message: defaultError.message });
 };
 module.exports = errorMiddleware;

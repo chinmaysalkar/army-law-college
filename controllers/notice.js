@@ -47,9 +47,9 @@ const deleteNotice = async (req, res, next) => {
 };
 const updateNotice = async (req, res, next) => {
   try {
-    const updatednotic = await Notice.findByIdAndUpdate(
+    const updatednotic = await Notice.findOneAndDelete(
       { _id: req.body._id },
-      req.body,
+      {$set:{notice}},
       { new: true }
     );
 

@@ -5,12 +5,14 @@ const visitorsSchema = new mongoose.Schema(
     firstName: {
       type: String,
       required: true,
-      match: /^[a-zA-Z]+$/,
+      trim:true,
+      match: /^[a-zA-Z]/,
     },
     lastName: {
       type: String,
       required: true,
-      match: /^[a-zA-Z]+$/,
+      trim:true,
+      match: /^[a-zA-Z]/,
     },
     visitorFullName: {
       type: String,

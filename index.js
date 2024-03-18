@@ -2,10 +2,11 @@ const express = require("express");
 require("dotenv").config();
 const bodyparser = require("body-parser");
 const mongoose = require("mongoose");
+const cors = require('cors')
 const app = express();
-const port = process.env.PORT || 5000;
-const eventRoute = require("./routes/eventRoute");
 const errorMiddleware = require("./middleware/errorHandler");
+const eventRoute = require("./routes/eventRoute");
+const port = process.env.PORT || 5000;
 
 //database connection
 mongoose
@@ -13,6 +14,7 @@ mongoose
   .then(() => console.log("database is connected"))
   .catch((error) => console.log(error));
 
+app.use(cors())
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use("/event", eventRoute);
