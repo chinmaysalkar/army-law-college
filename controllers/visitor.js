@@ -6,20 +6,20 @@ const addVisitor = async (req, res, next) => {
   try {
     const { firstName, lastName, Designation } = req.body;
 
-    const reviewImage = req.files.reviewImage[0];
-    const visitorImage = req.files.visitorImage[0];
+    // const reviewImage = req.files.reviewImage[0];
+    // const visitorImage = req.files.visitorImage[0];
 
-    //upload image to s3 bucket
-    const visitorImageUrl = await uploadFileToS3(visitorImage);
-    const reviewImageUrl = await uploadFileToS3(reviewImage);
+    // //upload image to s3 bucket
+    // const visitorImageUrl = await uploadFileToS3(visitorImage);
+    // const reviewImageUrl = await uploadFileToS3(reviewImage);
 
     const visitor = new Visitor({
       visitorFullName: `${firstName} ${lastName}`,
       firstName,
       lastName,
       Designation,
-      visitorImage: visitorImageUrl,
-      reviewImage: reviewImageUrl,
+      // visitorImage: visitorImageUrl,
+      // reviewImage: reviewImageUrl,
     });
     const saveVisitor = await visitor.save();
     res.status(200).json({
@@ -33,7 +33,7 @@ const addVisitor = async (req, res, next) => {
 
 const viewVisitor = async (req, res, next) => {
   try {
-    const visitorView = await Visitor.find();
+    const visitorView = await Visitor.find({ status: true });
     if (visitorView.length === 0) {
       return res.status(404).json({ message: "No data found" });
     }
@@ -49,25 +49,33 @@ const viewVisitor = async (req, res, next) => {
 
 const updateVisitor = async (req, res, next) => {
   try {
-    const { _id, firstName, lastName, Designation } = req.body;
+    const { _id,
+       firstName, 
+       lastName, 
+       Designation } = req.body;
     if (!_id) {
       return res.status(404).json({
         message: "visitor Id not found",
+      });
+    }
+    if (!firstName || !lastName) {
+      return res.status(400).json({
+        message: "Both first name and last name are required for modification of visitor full name ",
       });
     }
     const updatedvisitor = await Visitor.findOneAndUpdate(
       { _id: req.body._id },
       {
         $set: {
-          visitorFullName: `${firstName} ${lastName}`,
+          visitorFullName: `${firstName } ${lastName}`,
           firstName,
           lastName,
           Designation,
         },
       },
       { new: true }
-    );
-
+      );
+      
     await updatedvisitor.save();
     res.status(200).json({
       message: "visitor Data updated successfully",

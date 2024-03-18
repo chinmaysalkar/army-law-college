@@ -30,7 +30,7 @@ const teachingStaffSchema = new mongoose.Schema(
     qualification: {
       type: String,
       required: false,
-      match: /^[a-zA-Z]+$/
+      match:  /^[a-zA-Z\s!()\-_`[\]|\\:;"',.?/]*$/
     },
     designation: {
       type: String,

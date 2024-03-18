@@ -12,11 +12,11 @@ const addTeachingStaff = async (req, res, next) => {
       biography,
       researchAndPublications,
     } = req.body;
-    const profilePic = req.files.profilePic[0];
-    const profilePicUrl = await uploadFileToS3(profilePic);
+    // const profilePic = req.files.profilePic[0];
+    // const profilePicUrl = await uploadFileToS3(profilePic);
     const teachingStaff = new TeachingStaff({
       fullName: `${firstName} ${lastName}`,
-      profilePic: profilePicUrl,
+      // profilePic: profilePicUrl,
       firstName,
       lastName,
       email,
@@ -94,6 +94,11 @@ const updateTeachingStaff = async (req, res, next) => {
       const fileUrl = await uploadToS3(req.file);
 
       req.body.profilePic = fileUrl;
+    }
+    if (!firstName || !lastName) {
+      return res.status(400).json({
+        message: "Both first name and last name are required for modification name ",
+      });
     }
     const updatedStaff = await TeachingStaff.findOneAndUpdate(
       {

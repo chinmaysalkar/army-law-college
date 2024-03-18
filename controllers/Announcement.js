@@ -16,7 +16,7 @@ const addAnnouncement = async (req, res, next) => {
 
 const viewAnnouncement = async (req, res, next) => {
   try {
-    const viewAnnounce = await Announcement.find();
+    const viewAnnounce = await Announcement.find({ status: true });
     if (viewAnnounce.length === 0) {
       return res.status(404).json({ message: "No data found" });
     }
@@ -30,9 +30,11 @@ const viewAnnouncement = async (req, res, next) => {
 };
 const deleteAnnounce = async (req, res, next) => {
   try {
-    const deleteAnnouncement = await Announcement.findByIdAndDelete(
-      req.params.id
-    );
+    const deleteAnnouncement = await Announcement.findByIdAndUpdate(
+      req.params.id,   
+       { $set: { status: false } },
+      { new: true });
+    
     if (!deleteAnnouncement) {
       res.status(404).json({ message: " could not found announcement" });
     }

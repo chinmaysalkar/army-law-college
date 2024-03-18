@@ -74,6 +74,11 @@ const updateStudent = async (req, res, next) => {
 
       req.body.studentImages = fileUrl;
     }
+    if (!firstName || !lastName) {
+      return res.status(400).json({
+        message: "Both first name and last name are required for modification name ",
+      });
+    }
     const updatedstudent = await Student.findOneAndUpdate(
       { _id: req.body._id },
       {

@@ -10,6 +10,10 @@ const AnnouncementSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    status: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     timestamps: true,
