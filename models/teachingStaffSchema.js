@@ -6,14 +6,12 @@ const teachingStaffSchema = new mongoose.Schema(
     firstName: {
       type: String,
       required: true,
-      trim:true,
-      match: /^[a-zA-Z]/
+      match: /^[a-zA-Z]+$/,
     },
     lastName: {
       type: String,
       required: true,
-      trim:true,
-      match: /^[a-zA-Z]/
+      match: /^[a-zA-Z]+$/,
     },
     fullName: {
       type: String,

@@ -5,16 +5,16 @@ const { uploadFileToS3 } = require("../middleware/s3server");
 const addStudent = async (req, res, next) => {
   try {
     const { firstName, lastName, description } = req.body;
-    // const studentImages = req.files.studentImages[0];
-    // //upload image to s3 bucket
-    // const studentImagesUrl = await uploadFileToS3(studentImages);
+    const studentImages = req.files.studentImages[0];
+    //upload image to s3 bucket
+    const studentImagesUrl = await uploadFileToS3(studentImages);
 
     const student = new Student({
       studentFullName: `${firstName} ${lastName}`,
       firstName,
       lastName,
       description,
-      // studentImages: studentImagesUrl,
+      studentImages: studentImagesUrl,
     });
     const saveStudent = await student.save();
     res.status(200).json({

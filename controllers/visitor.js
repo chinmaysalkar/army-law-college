@@ -6,20 +6,20 @@ const addVisitor = async (req, res, next) => {
   try {
     const { firstName, lastName, Designation } = req.body;
 
-    // const reviewImage = req.files.reviewImage[0];
-    // const visitorImage = req.files.visitorImage[0];
+    const reviewImage = req.files.reviewImage[0];
+    const visitorImage = req.files.visitorImage[0];
 
-    // //upload image to s3 bucket
-    // const visitorImageUrl = await uploadFileToS3(visitorImage);
-    // const reviewImageUrl = await uploadFileToS3(reviewImage);
+    //upload image to s3 bucket
+    const visitorImageUrl = await uploadFileToS3(visitorImage);
+    const reviewImageUrl = await uploadFileToS3(reviewImage);
 
     const visitor = new Visitor({
       visitorFullName: `${firstName} ${lastName}`,
       firstName,
       lastName,
       Designation,
-      // visitorImage: visitorImageUrl,
-      // reviewImage: reviewImageUrl,
+      visitorImage: visitorImageUrl,
+      reviewImage: reviewImageUrl,
     });
     const saveVisitor = await visitor.save();
     res.status(200).json({

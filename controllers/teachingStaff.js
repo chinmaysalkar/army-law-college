@@ -12,11 +12,11 @@ const addTeachingStaff = async (req, res, next) => {
       biography,
       researchAndPublications,
     } = req.body;
-    // const profilePic = req.files.profilePic[0];
-    // const profilePicUrl = await uploadFileToS3(profilePic);
+    const profilePic = req.files.profilePic[0];
+    const profilePicUrl = await uploadFileToS3(profilePic);
     const teachingStaff = new TeachingStaff({
       fullName: `${firstName} ${lastName}`,
-      // profilePic: profilePicUrl,
+      profilePic: profilePicUrl,
       firstName,
       lastName,
       email,

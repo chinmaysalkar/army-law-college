@@ -27,7 +27,7 @@ const errorMiddleware = (err, req, res, next) => {
   // CORS error
   if(err.name==="CORSError"){
     defaultError.statusCode=403;
-    defaultError.message=` CORS Error : ${err.message}`
+    defaultError.message=` CORS Error : ${err.message} `
   }
   res.status(defaultError.statusCode).json({ message: defaultError.message });
 };

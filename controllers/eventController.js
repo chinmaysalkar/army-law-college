@@ -5,16 +5,16 @@ const { uploadFileToS3 } = require("../middleware/s3server");
 const addEvent = async (req, res, next) => {
   try {
     const { eventName, eventDetails, eventSession } = req.body;
-    // const eventImages = req.files.eventImages;
-    // const coverImages = req.files.coverImages[0];
+    const eventImages = req.files.eventImages;
+    const coverImages = req.files.coverImages[0];
 
-    // //upload image to s3 bucket
-    // const coverImagesUrl = await uploadFileToS3(coverImages);
-    // const eventImagesUrls = await Promise.all(
-    //   eventImages.map(async (image) => {
-    //     return await uploadFileToS3(image);
-    //   })
-    // );
+    //upload image to s3 bucket
+    const coverImagesUrl = await uploadFileToS3(coverImages);
+    const eventImagesUrls = await Promise.all(
+      eventImages.map(async (image) => {
+        return await uploadFileToS3(image);
+      })
+    );
 
     const uniqueId = `EVT-${Math.floor(Math.random() * 8889) + 1111}`;
     const event = new Event({
@@ -22,8 +22,8 @@ const addEvent = async (req, res, next) => {
       eventName,
       eventDetails,
       eventSession,
-      // coverImages: coverImagesUrl,
-      // eventImages: eventImagesUrls,
+      coverImages: coverImagesUrl,
+      eventImages: eventImagesUrls,
     });
 
     const eventadded = await event.save();
