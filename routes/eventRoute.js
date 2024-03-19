@@ -80,4 +80,5 @@ router.delete("/deleteTeachingStaff/:staffId", deleteTeachingStaff);
 
 router.get("/files", listAllObjects);
 router.delete("/deleteObject/:objectKey", deleteObject);
+
 module.exports = router;

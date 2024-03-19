@@ -5,13 +5,13 @@ const StudentSchema = new mongoose.Schema(
     firstName: {
       type: String,
       required: true,
-      trim:true,
+      
       match: /^[a-zA-Z]+$/,
     },
     lastName: {
       type: String,
       required: false,
-      trim:true,
+      
       match: /^[a-zA-Z]+$/,
     },
     studentFullName: {

@@ -19,6 +19,7 @@ const viewAnnouncement = async (req, res, next) => {
     const viewAnnounce = await Announcement.find({ status: true });
     if (viewAnnounce.length === 0) {
       return res.status(404).json({ message: "No data found" });
+      
     }
     res.status(200).json({
       message: "announcement shown succesfully",
